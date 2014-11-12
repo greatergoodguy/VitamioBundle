@@ -37,6 +37,9 @@ public class InitActivity extends Activity {
 
   protected void onCreate(Bundle savedInstanceState) {
     super.onCreate(savedInstanceState);
+    
+    getActionBar().hide();
+    
     getWindow().addFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON);
     uiHandler = new UIHandler(this);
 
