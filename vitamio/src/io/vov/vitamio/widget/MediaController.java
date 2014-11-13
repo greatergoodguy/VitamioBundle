@@ -17,6 +17,13 @@
 
 package io.vov.vitamio.widget;
 
+
+import io.vov.vitamio.R;
+import io.vov.vitamio.utils.Log;
+import io.vov.vitamio.utils.StringUtils;
+
+import java.lang.reflect.Method;
+
 import android.annotation.SuppressLint;
 import android.annotation.TargetApi;
 import android.content.Context;
@@ -38,11 +45,6 @@ import android.widget.PopupWindow;
 import android.widget.SeekBar;
 import android.widget.SeekBar.OnSeekBarChangeListener;
 import android.widget.TextView;
-
-import java.lang.reflect.Method;
-
-import io.vov.vitamio.utils.Log;
-import io.vov.vitamio.utils.StringUtils;
 
 /**
  * A view containing controls for a MediaPlayer. Typically contains the buttons
@@ -341,7 +343,12 @@ public class MediaController extends FrameLayout {
 
         mWindow.setAnimationStyle(mAnimStyle);
         //setWindowLayoutType();
-        mWindow.showAtLocation(mAnchor, Gravity.NO_GRAVITY, anchorRect.left, anchorRect.bottom);
+        
+        int rootHeight = mRoot.getHeight();
+        if(rootHeight == 0) {
+        	rootHeight = getResources().getDimensionPixelSize(R.dimen.mediacontroller_height);}
+        
+        mWindow.showAtLocation(mAnchor, Gravity.NO_GRAVITY, anchorRect.left, anchorRect.bottom - rootHeight);
       }
       mShowing = true;
       if (mShownListener != null)
@@ -418,7 +425,7 @@ public class MediaController extends FrameLayout {
     show(sDefaultTimeout);
     return true;
   }
-
+  
   @Override
   public boolean onTrackballEvent(MotionEvent ev) {
     show(sDefaultTimeout);
