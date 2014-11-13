@@ -617,6 +617,10 @@ public class VideoView extends SurfaceView implements MediaController.MediaPlaye
       mCurrentState = STATE_PLAYING;
     }
     mTargetState = STATE_PLAYING;
+
+    if(onPlayPauseListener != null) {
+    	onPlayPauseListener.onPlay();
+    }
   }
 
   public void pause() {
@@ -627,6 +631,10 @@ public class VideoView extends SurfaceView implements MediaController.MediaPlaye
       }
     }
     mTargetState = STATE_PAUSED;
+    
+    if(onPlayPauseListener != null) {
+    	onPlayPauseListener.onPause();
+    }
   }
 
   public void suspend() {
@@ -800,5 +808,16 @@ public class VideoView extends SurfaceView implements MediaController.MediaPlaye
 
   protected boolean isInPlaybackState() {
     return (mMediaPlayer != null && mCurrentState != STATE_ERROR && mCurrentState != STATE_IDLE && mCurrentState != STATE_PREPARING);
+  }
+  
+  private OnPlayPauseListener onPlayPauseListener;
+ 
+  public void setOnPlayPauseListener(OnPlayPauseListener onPlayPauseListener) {
+      this.onPlayPauseListener = onPlayPauseListener;
+  }
+  
+  public interface OnPlayPauseListener {
+      void onPlay();
+      void onPause();
   }
 }
